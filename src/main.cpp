@@ -46,7 +46,8 @@ bool moved = LOW;
 int YZero, XZero = 0;     
 int YValue, XValue = 0;   
 uint8_t sens = 0;         
-uint8_t arSens[5] = {125,100,85,60,35};   
+uint8_t arSens[5] = {125,100,85,60,35};
+uint8_t deadB = 10;
 
 uint16_t tim, h, tim1, h1, tim2, h2, tim3, h3;
 
@@ -67,16 +68,16 @@ void ringKnob (uint8_t *p)
       {
         posLed=0;
       }
-    if(posLed > 250)
+    if(posLed > 4)
       {
-        posLed=6;
+        posLed=3;
       }
     else
       {
-        posLed=posLed-*p;
+        posLed=posLed+*p;
       }
     pixels.clear();
-    pixels.setPixelColor(posLed, pixels.Color(255, 255, 255));
+    pixels.setPixelColor(posLed, pixels.Color(0, 0, 255));
     pixels.show();
   }
 
@@ -894,7 +895,7 @@ void loop()
         YValue = analogRead(vertPin) - YZero;  
         XValue = analogRead(horzPin) - XZero;
         h = millis();
-        if ((YValue > 13)||(YValue < (-13)))
+        if ((YValue > 1)||(YValue < (-1)))
           { 
             timeoff = LOW;
             selModes();
@@ -902,7 +903,7 @@ void loop()
             moved=1;
           }
           
-        if ((XValue > 13)||(XValue < (-13)))
+        if ((XValue > 1)||(XValue < (-1)))
           { 
             timeoff = LOW; 
             selModes();
@@ -910,7 +911,7 @@ void loop()
             moved=1;
           }
         
-        if ( (YValue <= 13)&&(YValue >= (-13))  &&  (XValue <= 13)&&(XValue >= (-13)))
+        if ( (YValue <= 5)&&(YValue >= (-5))  &&  (XValue <= 5)&&(XValue >= (-5)))
           {  
             if (((digitalRead(joyButt) == 1) && (digitalRead(butFun1) == 1)) || (EEPROM.read(10) == 4) )
               {

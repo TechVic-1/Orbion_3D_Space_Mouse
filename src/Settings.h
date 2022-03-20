@@ -4,7 +4,7 @@
 
 
 #define LED               15   // Nopixel
-#define NUMPIXELS         7    // Number of led on the strip (default 7)
+#define NUMPIXELS         4    // Number of led on the strip (default 7)
 #define DT                5    // DT Encoder                     
 #define CLK               4    // CLK Encoder         
 #define horzPin           A2   // VRY Joystick
